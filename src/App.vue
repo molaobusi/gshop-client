@@ -7,11 +7,16 @@
 
 <script>
   import FooterGuide from "./components/footerGuide/FooterGuide";
+  import {getFoodCategoryList} from "./api/index"
   export default {
     name: "App",
     components: {
       FooterGuide
     },
+    async mounted() {
+      const result = await getFoodCategoryList();
+      console.log(result);
+    }
   }
 </script>
 
