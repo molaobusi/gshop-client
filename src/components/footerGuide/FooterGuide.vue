@@ -29,10 +29,10 @@
 
 <script>
     export default {
-      name: "FooterGuide",
+      name: 'FooterGuide',
       methods: {
-        goPage(path) {
-          this.$router.replace(path);
+        goPage (path) {
+          this.$router.replace(path)
         }
       }
     }

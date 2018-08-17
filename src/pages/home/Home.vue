@@ -1,7 +1,7 @@
 <template>
   <section class="msite">
     <!--首页头部-->
-    <HeaderTop title="昌平区北七家宏福科技园(337省道北)">
+    <HeaderTop :title="address.name">
       <span class="header_search" slot="left">
         <i class="iconfont icon-sousuo"></i>
       </span>
@@ -130,19 +130,22 @@
 </template>
 
 <script>
-  import Swiper from 'swiper';
-  import 'swiper/dist/css/swiper.min.css';
+  import Swiper from 'swiper'
+  import 'swiper/dist/css/swiper.min.css'
 
-  import HeaderTop from "../../components/headerTop/HeaderTop";
-  import ShopList from "../../components/shop/ShopList";
+  import HeaderTop from '../../components/headerTop/HeaderTop'
+  import ShopList from '../../components/shop/ShopList'
+  import {mapState} from 'vuex'
 
   export default {
-    name: "Home",
+    name: 'Home',
     components: {
       HeaderTop,
       ShopList
     },
-    mounted() {
+    mounted () {
+      // 加载当前位置信息
+      this.$store.dispatch('getAddress')
       new Swiper('.swiper-container', {
         loop: true,
         // 如果需要分页器
@@ -150,6 +153,9 @@
           el: '.swiper-pagination'
         }
       })
+    },
+    computed: {
+      ...mapState(['address'])
     }
   }
 </script>

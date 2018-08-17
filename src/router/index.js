@@ -10,7 +10,7 @@ import Search from '../pages/search/Search'
 import Person from '../pages/person/Person'
 import Login from '../pages/login/Login'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 export default new VueRouter({
   routes: [

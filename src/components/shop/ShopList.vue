@@ -183,7 +183,7 @@
 
 <script>
     export default {
-        name: "ShopList"
+        name: 'ShopList'
     }
 </script>
 

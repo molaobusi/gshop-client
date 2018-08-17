@@ -92,9 +92,9 @@
 </template>
 
 <script>
-  import HeaderTop from "../../components/headerTop/HeaderTop";
+  import HeaderTop from '../../components/headerTop/HeaderTop'
   export default {
-    name: "Person",
+    name: 'Person',
     components: {
       HeaderTop
     }

@@ -9,9 +9,9 @@
 </template>
 
 <script>
-  import HeaderTop from "../../components/headerTop/HeaderTop";
+  import HeaderTop from '../../components/headerTop/HeaderTop'
   export default {
-    name: "Search",
+    name: 'Search',
     components: {
       HeaderTop
     }

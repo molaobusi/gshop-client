@@ -4,11 +4,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router/index'
+import store from './store/index';
 
-(() => {
-  new Vue({
+(() => new Vue({
     el: '#app',
     render: h => h(App),
-    router
+    router,
+    store
   })
-})()
+)()

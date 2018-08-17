@@ -11,7 +11,7 @@
 
 <script>
   export default {
-    name: "HeaderTop",
+    name: 'HeaderTop',
     props: {
       title: String
     }

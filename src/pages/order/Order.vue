@@ -10,9 +10,9 @@
 </template>
 
 <script>
-  import HeaderTop from "../../components/headerTop/HeaderTop";
+  import HeaderTop from '../../components/headerTop/HeaderTop'
   export default {
-    name: "Order",
+    name: 'Order',
     components: {
       HeaderTop
     }
