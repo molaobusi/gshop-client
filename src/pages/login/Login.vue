@@ -40,11 +40,12 @@
               </section>
               <section class="login_message">
                 <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                <img class="get_verification" src="../../../static/images/captcha.svg" alt="captcha">
+                <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha"
+                     @click="getCaptcha" ref="captcha">
               </section>
             </section>
           </div>
-          <button class="login_submit" @click="login">登录</button>
+          <button class="login_submit" @click.prevent="login">登录</button>
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
@@ -58,6 +59,7 @@
 
 <script>
   import AlertTip from '../../components/alertTip/AlertTip'
+  import {reqSendCode, reqSmsLogin, reqPwdLogin} from '../../api/index'
   export default {
     name: 'Login',
     components: {
@@ -73,8 +75,8 @@
         name: '', // 用户名
         pwd: '', // 密码
         captcha: '', // 图形验证码
-        isAlert: false, // 是否弹出自定义的Alert框
-        alertText: 'xxx' // 弹出框内容
+        isAlert: false, // 是否弹出自定义的Alert警告框
+        alertText: 'xxx' // 警告框内容
       }
     },
     computed: {
@@ -84,52 +86,87 @@
     },
     methods: {
       // 异步获取验证码接口
-      getCode() {
+      async getCode() {
         // 启动倒计时
         if (!this.computedTime) {
           this.computedTime = 30
-          const intervalId = setInterval(() => {
+          this.intervalId = setInterval(() => {
             this.computedTime--
             if (this.computedTime <= 0) {
-              clearInterval(intervalId)
+              clearInterval(this.intervalId)
             }
           }, 1000)
 
           // 发送ajax请求(获取验证码接口)
+          const result = await reqSendCode(this.phone)
+          if (result.code === 1) {
+            this.showAlert(result.msg)
+            if (this.computedTime) {
+              this.computedTime = 0
+              clearInterval(this.intervalId)
+              this.intervalId = undefined
+            }
+          }
         }
       },
       // 登录接口
-      login() {
+      async login() {
+        let result
         // 前端表单验证
         if (this.loginType) { // 短信登录方式
-          const {checkPhone, phone, code} = this
+          const {phone, code} = this
           // 手机号格式不正确
-          if (!checkPhone) {
+          if (!(/^1\d{10}$/.test(this.phone))) {
             this.showAlert('手机号格式不正确')
+            return
           } else if (!(/^\d{6}$/.test(code))) {
             this.showAlert('验证码必须为6位数字')
+            return
           }
+          result = await reqSmsLogin(phone, code)
         } else { // 用户名/密码登录方式
           const {name, pwd, captcha} = this
           // 用户名不能为空
           if (!name) {
             this.showAlert('用户名不能为空')
+            return
           } else if (pwd.length < 6 || pwd.length > 20) {
             this.showAlert('密码必须是6到20位')
+            return
           } else if (!captcha) {
             this.showAlert('图形验证码不能为空')
+            return
           }
+          result = await reqPwdLogin({name, pwd, captcha})
+        }
+
+        if (result.code === 0) {
+          this.$store.dispatch('saveUserInfo', result.data)
+          this.$router.replace('/person')
+        } else {
+          this.getCaptcha()
+          this.showAlert(result.msg)
+        }
+
+        if (this.computedTime) {
+          this.computedTime = 0
+          clearInterval(this.intervalId)
+          this.intervalId = undefined
         }
       },
-      // 显示弹出框方法
+      // 显示警告框方法
       showAlert(alertText) {
         this.isAlert = true
         this.alertText = alertText
       },
-      // 自定义触发事件方法
+      // 关闭警告框方法
       closeTip() {
         this.isAlert = false
         this.alertText = ''
+      },
+      // 获取图形验证码方法
+      getCaptcha() {
+        this.$refs.captcha.src = 'http://localhost:4000/captcha?time=' + Date.now()
       }
     }
   }

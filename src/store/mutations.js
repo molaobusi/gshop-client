@@ -5,7 +5,8 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_USER_INFO
 } from './mutations-types'
 
 export default {
@@ -22,6 +23,11 @@ export default {
   // 接收商铺列表的mutations方法
   [RECEIVE_SHOPS](state, shopList) {
     state.shopList = shopList
+  },
+
+  // 接收用户信息的mutations方法
+  [RECEIVE_USER_INFO](state, userInfo) {
+    state.userInfo = userInfo
   }
 
 }
