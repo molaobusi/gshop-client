@@ -2,12 +2,17 @@
   <section class="msite">
     <!--首页头部-->
     <HeaderTop :title="address.name">
-      <span class="header_search" slot="left">
+      <router-link class="header_search" slot="left" to="/search">
         <i class="iconfont icon-sousuo"></i>
-      </span>
-      <span class="header_login" slot="right">
-        <span class="header_login_text">登录|注册</span>
-      </span>
+      </router-link>
+      <router-link class="header_login" slot="right" :to="userInfo._id ? '/userInfo' : '/login'">
+        <span class="header_login_text" v-if="!userInfo._id">
+          登录|注册
+        </span>
+        <span class="header_login_text" v-else>
+          <i class="iconfont icon-wodedianji"></i>
+        </span>
+      </router-link>
     </HeaderTop>
     <!--首页导航-->
     <nav class="msite_nav">
@@ -63,7 +68,7 @@
       this.$store.dispatch('getFoodCategoryList')
     },
     computed: {
-      ...mapState(['address', 'categoryList']),
+      ...mapState(['address', 'categoryList', 'userInfo']),
       // 将一维数组categoryList转换为二维数组arr
       categoryArr() {
         const arr = [] // 二维数组

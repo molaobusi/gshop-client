@@ -6,13 +6,16 @@ import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
   RECEIVE_SHOPS,
-  RECEIVE_USER_INFO
+  RECEIVE_USER_INFO,
+  RESET_USER_INFO
 } from './mutations-types'
 
 import {
   reqAddress,
   reqFoodCategoryList,
-  reqShopList
+  reqShopList,
+  reqUserinfo,
+  reqLogout
 } from '../api/index'
 
 export default {
@@ -42,10 +45,25 @@ export default {
     }
   },
 
-  // 保存用户信息的action方法
+  // 同步获取用户信息保存到state中的action方法
   saveUserInfo({commit}, userInfo) {
     commit(RECEIVE_USER_INFO, userInfo)
-  }
+  },
 
+  // 异步获取用户信息保存到state中的action方法
+  async getUserInfo({commit}) {
+    const result = await reqUserinfo()
+    if (result.code === 0) {
+      commit(RECEIVE_USER_INFO, result.data)
+    }
+  },
+
+  // 异步退出登录的action方法
+  async logout({commit}) {
+    const result = await reqLogout()
+    if (result.code === 0) {
+      commit(RESET_USER_INFO)
+    }
+  }
 
 }

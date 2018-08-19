@@ -12,6 +12,9 @@
     name: 'App',
     components: {
       FooterGuide
+    },
+    mounted() {
+      this.$store.dispatch('getUserInfo')
     }
   }
 </script>
