@@ -230,11 +230,11 @@
           >.iconfont
             margin-left -10px
             font-size 30px
-          .icon-order-s
+          .icon-dingdan1
             color #02a774
           .icon-jifen
             color #ff5f3e
-          .icon-vip
+          .icon-huiyuan
             color #f90
           .icon-fuwu
             color #02a774

@@ -48,7 +48,7 @@
   import 'swiper/dist/css/swiper.min.css'
 
   import HeaderTop from '../../components/headerTop/HeaderTop'
-  import ShopList from '../../components/shop/ShopList'
+  import ShopList from '../../components/shopList/ShopList'
   import {mapState} from 'vuex'
 
   export default {
@@ -92,13 +92,13 @@
     watch: {
       categoryList() {
         this.$nextTick(() => {
-          new Swiper('.swiper-container', {
+          (() => new Swiper('.swiper-container', {
             loop: true,
             // 如果需要分页器
             pagination: {
               el: '.swiper-pagination'
             }
-          })
+          }))()
         })
       }
     }

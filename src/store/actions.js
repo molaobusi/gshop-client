@@ -7,7 +7,13 @@ import {
   RECEIVE_CATEGORYS,
   RECEIVE_SHOPS,
   RECEIVE_USER_INFO,
-  RESET_USER_INFO
+  RESET_USER_INFO,
+  RECEIVE_GOODS,
+  RECEIVE_RATINGS,
+  RECEIVE_INFO,
+  INCREMENT_FOOD_COUNT,
+  DECREMENT_FOOD_COUNT,
+  CLEAR_CART
 } from './mutations-types'
 
 import {
@@ -15,7 +21,10 @@ import {
   reqFoodCategoryList,
   reqShopList,
   reqUserinfo,
-  reqLogout
+  reqLogout,
+  reqShopGoods,
+  reqShopRatings,
+  reqShopInfo
 } from '../api/index'
 
 export default {
@@ -64,6 +73,47 @@ export default {
     if (result.code === 0) {
       commit(RESET_USER_INFO)
     }
-  }
+  },
 
+  // 异步获取商家商品列表
+  async getShopGoods({commit}, callback) {
+    const result = await reqShopGoods()
+    if (result.code === 0) {
+      const goods = result.data
+      commit(RECEIVE_GOODS, {goods})
+      callback && callback()
+    }
+  },
+
+  // 异步获取商家评价列表
+  async getShopRatings({commit}) {
+    const result = await reqShopRatings()
+    if (result.code === 0) {
+      const ratings = result.data
+      commit(RECEIVE_RATINGS, {ratings})
+    }
+  },
+
+  // 异步获取商家信息
+  async getShopInfo({commit}) {
+    const result = await reqShopInfo()
+    if (result.code === 0) {
+      const info = result.data
+      commit(RECEIVE_INFO, {info})
+    }
+  },
+
+  // 同步增加或减少商品的count数量
+  updateFoodCount({commit}, {isAdd, food}) {
+    if (isAdd) { // 增加
+      commit(INCREMENT_FOOD_COUNT, food)
+    } else { // 减少
+      commit(DECREMENT_FOOD_COUNT, food)
+    }
+  },
+
+  // 清空购物车
+  clearCart({commit}) {
+    commit(CLEAR_CART)
+  }
 }
