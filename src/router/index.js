@@ -4,12 +4,14 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import Home from '../pages/home/Home'
 import Order from '../pages/order/Order'
 import Search from '../pages/search/Search'
 import Person from '../pages/person/Person'
 import Login from '../pages/login/Login'
 import Shop from '../pages/shop/Shop'
+
 import ShopGoods from '../pages/shop/shopGoods/ShopGoods'
 import ShopRatings from '../pages/shop/shopRatings/ShopRatings'
 import ShopInfo from '../pages/shop/shopInfo/ShopInfo'

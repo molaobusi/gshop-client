@@ -14,7 +14,9 @@ import {
   RECEIVE_RATINGS,
   RECEIVE_INFO,
   INCREMENT_FOOD_COUNT,
-  DECREMENT_FOOD_COUNT, CLEAR_CART
+  DECREMENT_FOOD_COUNT,
+  CLEAR_CART,
+  RECEIVE_SEARCH_SHOPS
 } from './mutations-types'
 
 export default {
@@ -84,6 +86,11 @@ export default {
     state.cartFoods.forEach(food => food.count = 0)
     // 将购物车数组置空
     state.cartFoods = []
+  },
+
+  // 接收搜索商家列表
+  [RECEIVE_SEARCH_SHOPS](state, searchShops) {
+    state.searchShops = searchShops
   }
 
 }
